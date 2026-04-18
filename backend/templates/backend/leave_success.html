@@ -1,0 +1,17 @@
+{% extends 'backend/base.html' %}
+{% block title %}Заявка отправлена{% endblock %}
+
+{% block content %}
+<section class="py-12 px-6 bg-gradient-to-r from-green-50 via-white to-green-100 min-h-screen">
+    <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md p-8 border border-green-200 text-center">
+        <h2 class="text-2xl font-bold text-green-700 mb-4">Спасибо, {{ name }}!</h2>
+        <p class="text-gray-700 mb-4">
+            Ваша заявка на <span class="font-semibold text-green-700">"{{ craft.name }}"</span> успешно отправлена.
+        </p>
+        <a href="{% url 'backend:crafts' %}" 
+           class="inline-block bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-500 transition">
+           ← Вернуться к списку ремёсел
+        </a>
+    </div>
+</section>
+{% endblock %}

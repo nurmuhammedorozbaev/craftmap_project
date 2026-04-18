@@ -1,0 +1,84 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}Карта традиционных ремёсел{% endblock %}
+
+{% block content %}
+<section class="min-h-screen px-6 py-8 text-white">
+    <h2 class="text-3xl font-bold mb-4">Карта традиционных ремёсел</h2>
+    <p class="mb-6 max-w-2xl">
+        Сохраняем и популяризируем культуру Кыргызстана. Исследуйте ремёсла, мастеров и регионы на интерактивной карте.
+    </p>
+
+    <!-- Панель фильтров -->
+    <div class="max-w-4xl mx-auto mb-6 bg-white/80 rounded-xl shadow-lg p-6 border border-green-200 text-black">
+        <h3 class="text-lg font-semibold text-green-700 mb-4">Фильтры</h3>
+        <form id="map-filters" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Ремёсла -->
+            <div>
+                <h4 class="font-semibold text-green-600 mb-2">Ремёсла</h4>
+                <label><input type="checkbox" name="craft_type" value="felt" checked> Войлок</label><br>
+                <label><input type="checkbox" name="craft_type" value="jewelry" checked> Ювелирное дело</label><br>
+                <label><input type="checkbox" name="craft_type" value="wood" checked> Резьба по дереву</label><br>
+                <label><input type="checkbox" name="craft_type" value="yurt" checked> Изготовление юрт</label><br>
+                <label><input type="checkbox" name="craft_type" value="embroidery" checked> Вышивка</label><br>
+                <label><input type="checkbox" name="craft_type" value="ceramics" checked> Гончарное дело</label>
+            </div>
+
+            <!-- Регионы -->
+            <div>
+                <h4 class="font-semibold text-green-600 mb-2">Регионы</h4>
+                <label><input type="checkbox" name="region" value="bishkek" checked> Бишкек</label><br>
+                <label><input type="checkbox" name="region" value="osh" checked> Ошская область</label><br>
+                <label><input type="checkbox" name="region" value="naryn" checked> Нарынская область</label><br>
+                <label><input type="checkbox" name="region" value="issyk" checked> Иссык‑Кульская область</label><br>
+                <label><input type="checkbox" name="region" value="talas" checked> Таласская область</label><br>
+                <label><input type="checkbox" name="region" value="batken" checked> Баткенская область</label>
+            </div>
+        </form>
+    </div>
+
+    <!-- Карта -->
+    <div id="map" class="w-full h-[600px] rounded-xl shadow-md border border-green-200 mb-8"></div>
+
+    <!-- Категории ремёсел -->
+    <div id="craft-list" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Карточки будут генерироваться динамически -->
+    </div>
+</section>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    var map = L.map('map').setView([42.8746, 74.5698], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    fetch("/api/crafts/")
+      .then(res => res.json())
+      .then(crafts => {
+        console.log("Crafts from API:", crafts); // проверка
+
+        crafts.forEach(craft => {
+          if (craft.latitude && craft.longitude) {
+            let lat = parseFloat(craft.latitude);
+            let lng = parseFloat(craft.longitude);
+
+            L.marker([lat, lng])
+              .bindPopup(`
+                <div style="max-width:200px">
+                  <h4 style="color:#166534;">${craft.name} — ${craft.region?.name || ""}</h4>
+                  <p>${craft.description || ""}</p>
+                  <p><strong>Цена:</strong> ${craft.price || ""}</p>
+                  <p><strong>Опыт:</strong> ${craft.experience || ""}</p>
+                </div>
+              `)
+              .addTo(map);
+          }
+        });
+      })
+      .catch(err => console.error("Ошибка загрузки API:", err));
+</script>
+
+{% endblock %}

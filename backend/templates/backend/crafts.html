@@ -1,0 +1,61 @@
+{% extends 'backend/base.html' %}
+{% block title %}Ремёсла{% endblock %}
+
+{% block content %}
+<section class="py-16 px-6 bg-gradient-to-r from-green-50 via-white to-green-100 min-h-screen">
+    <div class="max-w-7xl mx-auto">
+        <!-- Заголовок -->
+        <h2 class="text-4xl font-extrabold text-green-700 mb-6 text-center">
+            Ремёсла Кыргызстана
+        </h2>
+        <p class="text-center text-gray-700 mb-10">
+            Откройте для себя богатство традиционных ремёсел нашей страны.
+        </p>
+
+        <!-- Панель поиска и фильтров -->
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
+            <input type="text" placeholder="Поиск по названию ремесла..."
+                   class="w-full md:w-1/3 px-4 py-2 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400">
+            <select class="px-4 py-2 border border-green-200 rounded-lg">
+                <option>Все категории</option>
+                {% for category in categories %}
+                <option>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="px-4 py-2 border border-green-200 rounded-lg">
+                <option>Все регионы</option>
+                {% for region in regions %}
+                <option>{{ region.name }}</option>
+                {% endfor %}
+            </select>
+            <button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                Сбросить
+            </button>
+        </div>
+
+        <!-- Сетка карточек -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {% for craft in crafts %}
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition transform p-6 border border-green-100">
+                {% if craft.image %}
+                <img src="{{ craft.image.url }}" alt="{{ craft.name }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                {% endif %}
+                <h3 class="text-xl font-semibold text-green-700 mb-2">{{ craft.name }}</h3>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Категория:</span> {{ craft.category.name }}</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Регион:</span> {{ craft.region.name }}</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Мастер:</span> {{ craft.master.name }}</p>
+                <p class="text-gray-500 text-sm mb-4">{{ craft.description|truncatewords:20 }}</p>
+                <a href="{% url 'backend:craft_detail' craft.id %}" 
+                   class="group relative bg-green-600 text-white font-semibold py-2 px-4 rounded-lg overflow-hidden inline-block">
+                    <span class="relative z-10">Подробнее</span>
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-green-400 transform scale-x-0 
+                                 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-600 col-span-3 italic">Ремёсла пока не добавлены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

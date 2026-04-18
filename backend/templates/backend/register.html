@@ -1,0 +1,46 @@
+{% extends 'backend/base.html' %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-md border border-green-200">
+    <h2 class="text-2xl font-bold text-green-700 mb-6">Регистрация</h2>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Имя пользователя</label>
+            {{ form.username }}
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            {{ form.email }}
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Роль</label>
+            {{ form.role }}
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
+            {{ form.password1 }}
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Повторите пароль</label>
+            {{ form.password2 }}
+        </div>
+
+        <button type="submit" 
+                class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-500 transition">
+            Зарегистрироваться
+        </button>
+    </form>
+
+    <p class="mt-4 text-sm text-gray-600 text-center">
+        Уже есть аккаунт? 
+        <a href="{% url 'backend:login' %}" class="text-green-600 hover:text-yellow-500 font-semibold">Войдите</a>
+    </p>
+</div>
+{% endblock %}

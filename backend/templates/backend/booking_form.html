@@ -1,0 +1,10 @@
+{% extends "backend/base.html" %}
+{% block title %}Бронирование{% endblock %}
+{% block content %}
+<h2>Бронирование ремесла: {{ craft.name }}</h2>
+<form method="post" style="background:#f0fff4; border:2px solid #32cd32; border-radius:12px; padding:20px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Забронировать</button>
+</form>
+{% endblock %}
