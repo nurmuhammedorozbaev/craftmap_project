@@ -28,15 +28,10 @@ def craft_list_view(request):
     if search_query:
         crafts = crafts.filter(name__icontains=search_query)
 
-    # фильтрация по категории ремесла
-    craft_category = request.GET.get("craft_category")
-    if craft_category and craft_category != "Все категории":
-        crafts = crafts.filter(craft_category=craft_category)
-
-    # фильтрация по типу ремесла
-    craft_type = request.GET.get("craft_type")
-    if craft_type and craft_type != "Все типы":
-        crafts = crafts.filter(craft_type=craft_type)
+    # фильтрация по категории
+    category = request.GET.get("category")
+    if category and category != "Все категории":
+        crafts = crafts.filter(category__name=category)
 
     # фильтрация по региону
     region = request.GET.get("region")
@@ -44,21 +39,19 @@ def craft_list_view(request):
         crafts = crafts.filter(region__name=region)
 
     # для выпадающих списков
-    categories = Craft.objects.values_list("craft_category", flat=True).distinct()
-    types = Craft.objects.values_list("craft_type", flat=True).distinct()
+    categories = Craft.objects.values_list("category__name", flat=True).distinct()
     regions = Craft.objects.values_list("region__name", flat=True).distinct()
 
     return render(request, "backend/crafts.html", {
         "crafts": crafts,
         "categories": categories,
-        "types": types,
         "regions": regions,
     })
 
 # Детали ремесла + отзывы
 def craft_detail_view(request, pk):
     craft = get_object_or_404(Craft, pk=pk)
-    reviews = craft.reviews.all()  # все отзывы для этого ремесла
+    reviews = craft.reviews.all()
     form = ReviewForm()
 
     if request.method == "POST":
@@ -81,7 +74,7 @@ def craft_detail_view(request, pk):
 def leave_request_view(request, pk):
     craft = get_object_or_404(Craft, pk=pk)
     if request.method == "POST":
-        booking = Booking.objects.create(
+        Booking.objects.create(
             craft=craft,
             user=request.user,
             name=request.POST.get("name"),

@@ -1,11 +1,16 @@
 import os
 from pathlib import Path
+import dj_database_url  # для подключения PostgreSQL на Render
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "unsafe-secret-key"
-DEBUG = False
-ALLOWED_HOSTS = ['.onrender.com']
+# ⚡ Секретный ключ — вынеси в переменные окружения
+SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
+
+# ⚡ В бою всегда False
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -20,6 +25,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # ⚡ для статики на Render
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -48,12 +54,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "craftmap.wsgi.application"
 
-# ⚡ База данных SQLite для локального запуска
+# ⚡ База данных: локально SQLite, на Render — PostgreSQL
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=False
+    )
 }
 
 # Кэш — локальный
@@ -64,14 +71,14 @@ CACHES = {
     }
 }
 
+# ⚡ Статика
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    BASE_DIR / "backend" / "static",
-]
+STATICFILES_DIRS = [BASE_DIR / "backend" / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# ⚡ Медиа
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

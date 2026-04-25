@@ -21,8 +21,8 @@
         inset: 0;
         background: linear-gradient(
           to bottom,
-          rgba(4, 120, 87, 0.7),
-          rgba(16, 185, 129, 0.5)
+          rgba(3, 78, 59, 0.8),   /* более тёмный зелёный */
+          rgba(6, 95, 70, 0.6)    /* глубокий зелёный */
         );
       }
     </style>
@@ -37,39 +37,33 @@
     <div class="relative z-10 flex flex-col min-h-screen">
       <!-- Навигация -->
       <header
-        class="bg-green-600/90 text-white py-4 px-6 flex justify-between items-center shadow-md"
+        class="bg-green-700/90 text-white py-4 px-6 flex justify-between items-center shadow-md"
       >
         <div class="text-xl font-bold">CraftMap</div>
         <nav class="space-x-4 sm:space-x-6 text-sm sm:text-base">
           <a href="{% url 'backend:home' %}" class="hover:underline">Главная</a>
           <a href="{% url 'backend:map' %}" class="hover:underline">Карта</a>
-          <a href="{% url 'backend:crafts' %}" class="hover:underline"
-            >Ремёсла</a
-          >
+          <a href="{% url 'backend:crafts' %}" class="hover:underline">Ремёсла</a>
           {% if request.user.is_authenticated %}
-          <a href="{% url 'backend:profile' %}" class="hover:underline"
-            >Профиль</a
-          >
+          <a href="{% url 'backend:profile' %}" class="hover:underline">Профиль</a>
           <a href="{% url 'backend:logout' %}" class="hover:underline">Выйти</a>
           {% else %}
           <a href="{% url 'backend:login' %}" class="hover:underline">Войти</a>
-          <a href="{% url 'backend:register' %}" class="hover:underline"
-            >Регистрация</a
-          >
+          <a href="{% url 'backend:register' %}" class="hover:underline">Регистрация</a>
           {% endif %}
         </nav>
       </header>
 
       <!-- Контент -->
       <main
-        class="flex-grow container mx-auto py-6 px-3 sm:py-8 sm:px-4 bg-white/80 rounded-xl shadow-lg mt-6"
+        class="flex-grow container mx-auto py-6 px-3 sm:py-8 sm:px-4 bg-white/85 rounded-xl shadow-lg mt-6"
       >
         {% block content %}{% endblock %}
       </main>
 
       <!-- Футер -->
       <footer
-        class="bg-green-600/90 text-white text-center py-3 sm:py-4 mt-6 text-sm sm:text-base"
+        class="bg-green-700/90 text-white text-center py-3 sm:py-4 mt-6 text-sm sm:text-base"
       >
         <p>
           &copy; 2026 CraftMap — сохранение и популяризация ремёсел Кыргызстана

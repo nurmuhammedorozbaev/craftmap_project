@@ -2,8 +2,8 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-md border border-green-200">
-    <h2 class="text-2xl font-bold text-green-700 mb-6">Регистрация</h2>
+<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-green-300">
+    <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Регистрация</h2>
     <form method="post" class="space-y-4">
         {% csrf_token %}
 
@@ -22,25 +22,52 @@
             {{ form.role }}
         </div>
 
+        <!-- Пароль -->
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
-            {{ form.password1 }}
+            <div class="relative">
+                {{ form.password1 }}
+                <button type="button" onclick="togglePassword('id_password1', this)" 
+                        class="absolute inset-y-0 right-0 px-3 text-sm text-green-700 hover:text-green-900">
+                    Показать
+                </button>
+            </div>
         </div>
 
+        <!-- Повторите пароль -->
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Повторите пароль</label>
-            {{ form.password2 }}
+            <div class="relative">
+                {{ form.password2 }}
+                <button type="button" onclick="togglePassword('id_password2', this)" 
+                        class="absolute inset-y-0 right-0 px-3 text-sm text-green-700 hover:text-green-900">
+                    Показать
+                </button>
+            </div>
         </div>
 
         <button type="submit" 
-                class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-500 transition">
+                class="w-full bg-green-800 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-900 transition">
             Зарегистрироваться
         </button>
     </form>
 
     <p class="mt-4 text-sm text-gray-600 text-center">
         Уже есть аккаунт? 
-        <a href="{% url 'backend:login' %}" class="text-green-600 hover:text-yellow-500 font-semibold">Войдите</a>
+        <a href="{% url 'backend:login' %}" class="text-green-700 hover:text-green-900 font-semibold">Войдите</a>
     </p>
 </div>
+
+<script>
+function togglePassword(id, btn) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "Скрыть";
+    } else {
+        input.type = "password";
+        btn.textContent = "Показать";
+    }
+}
+</script>
 {% endblock %}

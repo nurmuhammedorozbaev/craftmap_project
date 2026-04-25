@@ -2,16 +2,16 @@
 {% block title %}{{ craft.name }}{% endblock %}
 
 {% block content %}
-<section class="min-h-screen bg-gradient-to-r from-green-50 via-white to-green-100 py-16 px-6">
+<section class="min-h-screen bg-gradient-to-r from-green-100 via-white to-green-200 py-16 px-6">
 
-    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-green-100">
+    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-green-300">
 
         <!-- 🔥 Верхний блок -->
         <div class="grid md:grid-cols-2 gap-10 items-center mb-10">
             <!-- Текст -->
             <div>
-                <h1 class="text-4xl font-extrabold text-green-700 mb-4">{{ craft.name }}</h1>
-                <p class="text-gray-600 mb-4">{{ craft.description }}</p>
+                <h1 class="text-4xl font-extrabold text-green-800 mb-4">{{ craft.name }}</h1>
+                <p class="text-gray-700 mb-4">{{ craft.description }}</p>
 
                 <div class="space-y-2 text-gray-700 text-sm mb-6">
                     <p>📍 Регион: <span class="font-semibold">{{ craft.region.name }}</span></p>
@@ -22,7 +22,7 @@
                 </div>
 
                 <a href="{% url 'backend:leave_request' craft.id %}"
-                   class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                   class="inline-block bg-green-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-900 transition">
                    Забронировать мастер-класс
                 </a>
             </div>
@@ -37,45 +37,45 @@
 
         <!-- 📊 Характеристики -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-            <div class="bg-green-50 p-4 rounded-xl text-center">
+            <div class="bg-green-100 p-4 rounded-xl text-center">
                 <p class="text-gray-500 text-sm">Опыт</p>
-                <p class="font-bold text-green-700">{{ craft.experience }}</p>
+                <p class="font-bold text-green-800">{{ craft.experience }}</p>
             </div>
-            <div class="bg-green-50 p-4 rounded-xl text-center">
+            <div class="bg-green-100 p-4 rounded-xl text-center">
                 <p class="text-gray-500 text-sm">Стоимость</p>
-                <p class="font-bold text-green-700">{{ craft.price }}</p>
+                <p class="font-bold text-green-800">{{ craft.price }}</p>
             </div>
-            <div class="bg-green-50 p-4 rounded-xl text-center">
+            <div class="bg-green-100 p-4 rounded-xl text-center">
                 <p class="text-gray-500 text-sm">Язык</p>
-                <p class="font-bold text-green-700">{{ craft.language }}</p>
+                <p class="font-bold text-green-800">{{ craft.language }}</p>
             </div>
-            <div class="bg-green-50 p-4 rounded-xl text-center">
+            <div class="bg-green-100 p-4 rounded-xl text-center">
                 <p class="text-gray-500 text-sm">Время</p>
-                <p class="font-bold text-green-700">{{ craft.schedule }}</p>
+                <p class="font-bold text-green-800">{{ craft.schedule }}</p>
             </div>
         </div>
 
         <!-- 📍 Локация -->
         <div class="bg-gray-100 rounded-xl p-6 mb-8">
-            <h3 class="text-xl font-semibold text-green-700 mb-4">Местоположение</h3>
+            <h3 class="text-xl font-semibold text-green-800 mb-4">Местоположение</h3>
             <p class="text-gray-700 mb-2">📍 {{ craft.region.name }}, Кыргызстан</p>
 
             <!-- Карта -->
-            <div id="map" class="mt-4 rounded-lg shadow-md border border-green-200" style="height:400px;"></div>
+            <div id="map" class="mt-4 rounded-lg shadow-md border border-green-300" style="height:400px;"></div>
 
             <!-- 🔥 Инфо-блок под картой -->
-            <div class="mt-6 bg-white rounded-xl shadow-md p-6 border border-green-200">
-                <h4 class="text-lg font-bold text-green-700 mb-2">{{ craft.name }}</h4>
+            <div class="mt-6 bg-white rounded-xl shadow-md p-6 border border-green-300">
+                <h4 class="text-lg font-bold text-green-800 mb-2">{{ craft.name }}</h4>
                 <p class="text-gray-600 mb-2">⭐ {{ craft.rating|default:"5.0" }} — {{ craft.review_count|default:"10" }} отзывов</p>
                 <p class="text-gray-700 mb-1">📍 Адрес: {{ craft.region.name }}, Кыргызстан</p>
                 <p class="text-gray-700 mb-1">📞 Телефон: {{ craft.phone|default:"+996 XXX XX XX XX" }}</p>
-                <p class="text-gray-700">🌐 Сайт: <a href="{{ craft.website|default:'#' }}" class="text-green-600 hover:underline">{{ craft.website|default:"example.com" }}</a></p>
+                <p class="text-gray-700">🌐 Сайт: <a href="{{ craft.website|default:'#' }}" class="text-green-700 hover:text-green-900">{{ craft.website|default:"example.com" }}</a></p>
             </div>
         </div>
 
         <!-- 💬 Отзывы -->
-        <div class="bg-white rounded-xl shadow-md p-6 border border-green-200 mt-10">
-            <h3 class="text-xl font-semibold text-green-700 mb-4">Отзывы</h3>
+        <div class="bg-white rounded-xl shadow-md p-6 border border-green-300 mt-10">
+            <h3 class="text-xl font-semibold text-green-800 mb-4">Отзывы</h3>
 
             <!-- Список отзывов -->
             {% for review in reviews %}
@@ -103,49 +103,21 @@
                     {{ form.comment }}
                 </div>
                 <button type="submit" 
-                        class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
+                        class="bg-green-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-900 transition">
                     Оставить отзыв
                 </button>
             </form>
             {% else %}
-                <p class="text-gray-500 mt-4">Чтобы оставить отзыв, <a href="{% url 'backend:login' %}" class="text-green-600 hover:underline">войдите в аккаунт</a>.</p>
+                <p class="text-gray-500 mt-4">Чтобы оставить отзыв, <a href="{% url 'backend:login' %}" class="text-green-700 hover:text-green-900">войдите в аккаунт</a>.</p>
             {% endif %}
         </div>
 
         <!-- 🔙 Назад -->
         <div class="text-center mt-10">
-            <a href="{% url 'backend:crafts' %}" class="text-green-600 font-semibold hover:underline">
+            <a href="{% url 'backend:crafts' %}" class="text-green-700 font-semibold hover:text-green-900">
                 ← Назад к списку ремёсел
             </a>
         </div>
     </div>
 </section>
-
-<!-- Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-    var latitude = {{ craft.latitude }};
-    var longitude = {{ craft.longitude }};
-
-    var map = L.map('map').setView([latitude, longitude], 9);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    var greenIcon = L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
-
-    L.marker([latitude, longitude], {icon: greenIcon}).addTo(map)
-        .bindPopup("<b>{{ craft.name }}</b><br>{{ craft.region.name }}")
-        .openPopup();
-</script>
 {% endblock %}
