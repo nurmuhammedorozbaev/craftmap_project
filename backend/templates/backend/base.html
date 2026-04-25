@@ -1,64 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}CraftMap{% endblock %}</title>
     {% load static %}
     <!-- Подключение Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ВАЖНО: адаптивность для мобильных -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        .craftmap-bg {
-            background-image: url('https://holidays.flydubai.com/en/media/kyrgyzstan-hero-image-2_tcm18-157796.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-        }
-        .craftmap-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(4,120,87,0.7), rgba(16,185,129,0.5));
-        }
+      .craftmap-bg {
+        background-image: url("https://holidays.flydubai.com/en/media/kyrgyzstan-hero-image-2_tcm18-157796.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        position: relative;
+      }
+      .craftmap-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(4, 120, 87, 0.7),
+          rgba(16, 185, 129, 0.5)
+        );
+      }
     </style>
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-</head>
-<body class="flex flex-col min-h-screen craftmap-bg">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+  <body class="flex flex-col min-h-screen craftmap-bg">
     <!-- Полупрозрачный градиент -->
     <div class="craftmap-overlay"></div>
 
     <!-- Контент поверх фона -->
     <div class="relative z-10 flex flex-col min-h-screen">
-        <!-- Навигация -->
-        <header class="bg-green-600/90 text-white py-4 px-6 flex justify-between items-center shadow-md">
-            <div class="text-xl font-bold">CraftMap</div>
-            <nav class="space-x-6">
-                <a href="{% url 'backend:home' %}" class="hover:underline">Главная</a>
-                <a href="{% url 'backend:map' %}" class="hover:underline">Карта</a>
-                <a href="{% url 'backend:crafts' %}" class="hover:underline">Ремёсла</a>
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'backend:profile' %}" class="hover:underline">Профиль</a>
-                    <a href="{% url 'backend:logout' %}" class="hover:underline">Выйти</a>
-                {% else %}
-                    <a href="{% url 'backend:login' %}" class="hover:underline">Войти</a>
-                    <a href="{% url 'backend:register' %}" class="hover:underline">Регистрация</a>
-                {% endif %}
-            </nav>
-        </header>
+      <!-- Навигация -->
+      <header
+        class="bg-green-600/90 text-white py-4 px-6 flex justify-between items-center shadow-md"
+      >
+        <div class="text-xl font-bold">CraftMap</div>
+        <nav class="space-x-4 sm:space-x-6 text-sm sm:text-base">
+          <a href="{% url 'backend:home' %}" class="hover:underline">Главная</a>
+          <a href="{% url 'backend:map' %}" class="hover:underline">Карта</a>
+          <a href="{% url 'backend:crafts' %}" class="hover:underline"
+            >Ремёсла</a
+          >
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'backend:profile' %}" class="hover:underline"
+            >Профиль</a
+          >
+          <a href="{% url 'backend:logout' %}" class="hover:underline">Выйти</a>
+          {% else %}
+          <a href="{% url 'backend:login' %}" class="hover:underline">Войти</a>
+          <a href="{% url 'backend:register' %}" class="hover:underline"
+            >Регистрация</a
+          >
+          {% endif %}
+        </nav>
+      </header>
 
-        <!-- Контент -->
-        <main class="flex-grow container mx-auto py-8 px-4 bg-white/80 rounded-xl shadow-lg mt-6">
-            {% block content %}{% endblock %}
-        </main>
+      <!-- Контент -->
+      <main
+        class="flex-grow container mx-auto py-6 px-3 sm:py-8 sm:px-4 bg-white/80 rounded-xl shadow-lg mt-6"
+      >
+        {% block content %}{% endblock %}
+      </main>
 
-        <!-- Футер -->
-        <footer class="bg-green-600/90 text-white text-center py-4 mt-6">
-            <p>&copy; 2026 CraftMap — сохранение и популяризация ремёсел Кыргызстана</p>
-        </footer>
+      <!-- Футер -->
+      <footer
+        class="bg-green-600/90 text-white text-center py-3 sm:py-4 mt-6 text-sm sm:text-base"
+      >
+        <p>
+          &copy; 2026 CraftMap — сохранение и популяризация ремёсел Кыргызстана
+        </p>
+      </footer>
     </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</body>
+  </body>
 </html>
