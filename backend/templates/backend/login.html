@@ -2,31 +2,66 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-<section class="max-w-md mx-auto bg-white rounded-xl shadow-md p-8 border border-green-200">
-    <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Вход</h2>
+<section class="max-w-md mx-auto bg-white rounded-xl shadow-md p-8 border border-gray-200">
+    <h2 class="text-2xl font-bold text-blue-700 mb-6 text-center">Вход</h2>
+    <p class="text-center text-gray-600 mb-6">
+        Войдите в аккаунт, чтобы продолжить работу, сохранять избранное и следить за заказами.
+    </p>
     
     <form method="post" class="space-y-4">
         {% csrf_token %}
-        {{ form.as_p }}
         
+        <!-- Email -->
+        <div>
+            <label for="id_email" class="block text-gray-700 font-medium mb-1">E-mail *</label>
+            <input type="email" name="email" id="id_email" 
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                   required>
+        </div>
+        
+        <!-- Пароль -->
+        <div>
+            <label for="id_password" class="block text-gray-700 font-medium mb-1">Пароль *</label>
+            <div class="relative">
+                <input type="password" name="password" id="id_password" 
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                       required>
+                <button type="button" 
+                        onclick="togglePassword()" 
+                        class="absolute inset-y-0 right-0 px-3 text-sm text-blue-600">
+                    Показать
+                </button>
+            </div>
+        </div>
+        
+        <!-- Кнопка входа -->
         <button type="submit" 
-                class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg 
-                       hover:bg-green-700 transition relative overflow-hidden">
-            <span class="relative z-10">Войти</span>
-            <!-- подсветка снизу -->
-            <span class="absolute bottom-0 left-0 w-full h-1 bg-green-400 transform scale-x-0 
-                         group-hover:scale-x-100 transition-transform duration-300"></span>
+                class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg 
+                       hover:bg-blue-700 transition">
+            Войти
         </button>
     </form>
     
     <div class="mt-6 text-center text-gray-700">
-        Нет аккаунта? 
+        Ещё нет аккаунта? 
         <a href="{% url 'backend:register' %}" 
-           class="text-green-600 font-semibold relative inline-block 
-                  after:block after:h-[2px] after:bg-green-600 after:scale-x-0 
-                  hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-            Зарегистрируйтесь
+           class="text-blue-600 font-semibold hover:underline">
+            Зарегистрироваться
         </a>
     </div>
 </section>
+
+<script>
+function togglePassword() {
+    const input = document.getElementById("id_password");
+    const btn = event.target;
+    if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "Скрыть";
+    } else {
+        input.type = "password";
+        btn.textContent = "Показать";
+    }
+}
+</script>
 {% endblock %}

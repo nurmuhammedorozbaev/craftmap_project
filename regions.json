@@ -1,0 +1,50 @@
+[
+  {
+    "model": "backend.region",
+    "pk": 1,
+    "fields": {
+      "name": "Нарынская область",
+      "description": "Горный регион, центр — город Нарын"
+    }
+  },
+  {
+    "model": "backend.region",
+    "pk": 2,
+    "fields": {
+      "name": "Ошская область",
+      "description": "Южный регион, центр — город Ош"
+    }
+  },
+  {
+    "model": "backend.region",
+    "pk": 3,
+    "fields": {
+      "name": "Джалал-Абадская область",
+      "description": "Регион на юго-западе Кыргызстана"
+    }
+  },
+  {
+    "model": "backend.region",
+    "pk": 4,
+    "fields": {
+      "name": "Баткенская область",
+      "description": "Юго-западный регион, центр — город Баткен"
+    }
+  },
+  {
+    "model": "backend.region",
+    "pk": 5,
+    "fields": {
+      "name": "Таласская область",
+      "description": "Западный регион, центр — город Талас"
+    }
+  },
+  {
+    "model": "backend.region",
+    "pk": 6,
+    "fields": {
+      "name": "Иссык-Кульская область",
+      "description": "Регион вокруг озера Иссык-Куль"
+    }
+  }
+]

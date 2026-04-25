@@ -37,6 +37,8 @@ class Craft(models.Model):
     price = models.CharField(max_length=200, blank=True, null=True)      # Стоимость
     experience = models.CharField(max_length=200, blank=True, null=True) # Опыт мастера
     craft_category = models.CharField(max_length=200, blank=True, null=True) # Тип ремесла
+    website = models.URLField(blank=True, null=True)
+    phone = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -99,3 +101,14 @@ class Profile(models.Model):
 
     def bookings_today(self):
         return self.user.bookings.filter(created_at__date=timezone.now().date())
+
+
+class Review(models.Model):
+    craft = models.ForeignKey(Craft, on_delete=models.CASCADE, related_name="reviews")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=5)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Отзыв {self.user.username} о {self.craft.name}"
